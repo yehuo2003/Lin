@@ -39,9 +39,9 @@ function $Fe(element){
     return element.firstElementChild;
   }else{//针对IE8浏览器
     return element.firstChild;
-    var node=element.firstChild;//第一个节点
+    var node = element.firstChild;  //第一个节点
     while(node&&node.nodeType!=1){
-      node=node.nextSibling;
+      node = node.nextSibling;
     }
     return node;
   }
@@ -52,9 +52,9 @@ function $Le(element){
  if(element.lastElementChild){//true-->支持
    return element.lastElementChild;
  }else{//针对IE8浏览器
-   var node=element.lastChild;
+   var node = element.lastChild;
    while(node&&node.nodeType!=1){
-     node=node.previousSibling;
+     node = node.previousSibling;
    }
    return node;
  }
@@ -73,7 +73,7 @@ function $add(element,type,fn) {
   }else if(element.attachEvent){
       element.attachEvent("on"+type,fn);
   }else{
-      element["on"+type]=fn;
+      element["on"+type] = fn;
   }
 }
 
@@ -82,7 +82,7 @@ function $add(element,type,fn) {
 * attr---属性
 * */
 function getAttrValue(element,attr) {
-  return element.currentStyle?element.currentStyle[attr] : window.getComputedStyle(element,null)[attr]||0;
+  return element.currentStyle?element.currentStyle[attr]: window.getComputedStyle(element,null)[attr]||0;
 }
 /* 终极版本的动画函数---有bug
 *
@@ -90,30 +90,30 @@ function getAttrValue(element,attr) {
 function animate(element,json,fn) {
   clearInterval(element.timeId);
   element.timeId=setInterval(function () {
-      var flag=true;//假设都达到了目标
+      var flag = true;  //假设都达到了目标
       for(var attr in json){
           if(attr=="opacity"){//判断属性是不是opacity
-              var current= getAttrValue(element,attr)*100;
+              var current = getAttrValue(element,attr)*100;
               //每次移动多少步
-              var target=json[attr]*100;//直接赋值给一个变量,后面的代码都不用改
-              var step=(target-current)/10;//(目标-当前)/10
-              step=step>0?Math.ceil(step):Math.floor(step);
-              current=current+step;
-              element.style[attr]=current/100;
+              var target = json[attr]*100;                           //直接赋值给一个变量,后面的代码都不用改
+              var step   = (target-current)/10;                      //(目标-当前)/10
+                  step   = step>0?Math.ceil(step):Math.floor(step);
+                            current = current+step;
+              element.style[attr]   = current/100;
           }else if(attr=="zIndex"){//判断属性是不是zIndex
-              element.style[attr]=json[attr];
+              element.style[attr] = json[attr];
           }else{//普通的属性
               //获取当前的位置----getAttrValue(element,attr)获取的是字符串类型
-              var current= parseInt(getAttrValue(element,attr))||0;
+              var current = parseInt(getAttrValue(element,attr))||0;
               //每次移动多少步
-              var target=json[attr];//直接赋值给一个变量,后面的代码都不用改
-              var step=(target-current)/10;//(目标-当前)/10
-              step=step>0?Math.ceil(step):Math.floor(step);
-              current=current+step;
-              element.style[attr]=current+"px";
+              var target = json[attr];                               //直接赋值给一个变量,后面的代码都不用改
+              var step   = (target-current)/10;                      //(目标-当前)/10
+                  step   = step>0?Math.ceil(step):Math.floor(step);
+                            current = current+step;
+              element.style[attr]   = current+"px";
           }
           if(current!=target){
-              flag=false;//如果没到目标结果就为false
+              flag = false;  //如果没到目标结果就为false
           }
       }
       if(flag){//结果为true
@@ -129,8 +129,8 @@ function animate(element,json,fn) {
 //设置滚动条监听
 function getScroll(){
   return {
-    left:window.pageXOffset || document.documentElement.scrollLeft||document.body.scrollLeft,
-    top:window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0
+    left: window.pageXOffset || document.documentElement.scrollLeft||document.body.scrollLeft,
+    top : window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0
   };
 }
 window.onscroll = function () {
@@ -151,7 +151,7 @@ window.onscroll = function () {
 
 //判断浏览器是否支持这个方法
 function getStyle(elemnt,attr){
-  return window.getComputedStyle?window.getComputedStyle(elemnt,null)[attr]:elemnt.getComputedStyle[attr];
+  return window.getComputedStyle?window.getComputedStyle(elemnt,null)[attr]: elemnt.getComputedStyle[attr];
 } 
 
 //设置兼容代码
@@ -177,11 +177,11 @@ function getText(element){
 //创建异步对象
 //定义一个创建异步对象的函数，函数体内判断浏览器是否支持标准创建，如果支持返回标准创建，否则返回IE8以下的异步对象
 function createXhr(){
-  var xhr=null;
+  var xhr = null;
   if(window.XMLHttpRequest){
-    xhr=new XMLHttpRequest()
+    xhr = new XMLHttpRequest()
   }else{
-	xhr=new ActiveXObject("Microsoft.XMLHttp");
+	xhr = new ActiveXObject("Microsoft.XMLHttp");
 }
 	return xhr;
 }
@@ -190,13 +190,13 @@ function createXhr(){
 //点击按钮，改变div多个样式属性值
  function ChangeStyle(btnObj,dvObj,json) {
   this.btnObj = btnObj;
-  this.dvObj = dvObj;
-  this.json = json;
+  this.dvObj  = dvObj;
+  this.json   = json;
 }
 ChangeStyle.prototype.init = function () {
 
-  var that = this;
-  this.btnObj.onclick = function () {
+  var that                = this;
+      this.btnObj.onclick = function () {
     for(var key in that.json){
       that.dvObj.style[key] = that.json[key]
     }
@@ -204,7 +204,7 @@ ChangeStyle.prototype.init = function () {
 }
 //实例化对象
 var json = {"width":"500px","height":"500px","background":"yellow","opacity":"0.2"};
-var cs = new ChangeStyle(my$("btn"),my$("dv"),json);
+var cs   = new ChangeStyle(my$("btn"),my$("dv"),json);
 
 //翻转字符串
 String.prototype.myReverse = function () {
@@ -239,11 +239,11 @@ function $line(width){
 }
 //填充样式或者颜色
 function $fill(style){
-  return ctx.fillStyle=(style)
+  return ctx.fillStyle = (style)
 }
 // 填充颜色空心
 function $stroke(style){
-  return  ctx.strokeStyle = (style);
+  return ctx.strokeStyle = (style);
 }
 // 从x画到y
 function $moveTo(x,y){
@@ -328,9 +328,9 @@ function $yzm(){
     //2.创建随机字符串4绘制矩形中
     var pool = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890zxcvbnmasdfghjklqwertyuiop";
     for(var i=0;i<4;i++){
-      var c = pool[$rn(30,pool.length)]
-      ctx.textBaseline = "top";
-      var fs = $rn(10,30)
+      var c                = pool[$rn(30,pool.length)]
+          ctx.textBaseline = "top";
+      var fs               = $rn(10,30)
       $font(fs)
       $fill($rc(30,180));
       $Text(c,30*i,0);
@@ -365,8 +365,8 @@ function $ArcTime(time){
   ctx.stroke();
   //2:创建二个变量 开始角度 结束角度 -90
   var start = -90;
-  var end = -90;
-  var num = 1;
+  var end   = -90;
+  var num   = 1;
   //3:创建定时器
   var t = setInterval(function(){
     $clear(0,0,500,400);
@@ -378,7 +378,7 @@ function $ArcTime(time){
     $arc(250,200,100,start*Math.PI/180,end*Math.PI/180);  //绘制圆拱形
     ctx.stroke();      //描边
     //6:绘制文本  10%
-    num += 1;          //动态数值每次加1
+    num += 1;  //动态数值每次加1
     if(num>100){       
         num = 100;
         clearInterval(t);
@@ -405,13 +405,13 @@ function s_El(el){
 //echarts
 //gauge 计量器 传入要绑定id，计量器当前值，计量器名称
 function $gauge(id,val,name){
-  var id = my$(id);   
+  var id      = my$(id);
   var mychart = echarts.init(id);
-  var option = {
+  var option  = {
   series:[{
-    type:"gauge",
-    datail:{formatter:'{value}%'},
-    data:[{value:val,name:name}]
+    type  : "gauge",
+    datail: {formatter:'{value}%'},
+    data  : [{value:val,name:name}]
   }]
   };
   return  mychart.setOption(option);  
@@ -420,16 +420,16 @@ function $gauge(id,val,name){
 // data是数组，data1是列名 data2代表红色曲线满是 data3代表树状图数据高度
 function $line(id,text,data1,data2,data3){
   var mychart = echarts.init(my$(id));
-  var option = {
-    title:{text},
-    xAxis:{data:data1},
-    yAxis:{},
-    series:[{
-      type:"line",
-      data:data2
+  var option  = {
+    title : {text},
+    xAxis : {data:data1},
+    yAxis : {},
+    series: [{
+      type: "line",
+      data: data2
     },{
-      type:"bar",
-      data:data3
+      type: "bar",
+      data: data3
     }]
   }
   mychart.setOption(option); 
@@ -442,10 +442,10 @@ function $bar(id,text,data,data2){
   var mychart = echarts.init(my$(id));
   //4:创建option配置项
   var option = {
-    title:{text},
-    xAxis:{data},
-    yAxis:{},
-    series:[{type:"bar",data:data2}]
+    title : {text},
+    xAxis : {data},
+    yAxis : {},
+    series: [{type:"bar",data:data2}]
   }
   //5:将配置添加echarts对象
   mychart.setOption(option); 
@@ -455,12 +455,12 @@ function $bar(id,text,data,data2){
 // data 是写一个数组对象{[value,name]}
 function $pie(id,data){
   var mychart = echarts.init(my$(id));
-  var option = {
+  var option  = {
     series:[
        {
-         type:"pie",
-         radius:"50%",
-         center:["50%","50%"],
+         type  : "pie",
+         radius: "50%",
+         center: ["50%","50%"],
          data
        }
     ]
@@ -473,8 +473,8 @@ function $pie(id,data){
 function $slider(time) {
   function task() {
     //查找限制class为show的img
-    var img = slider.getElementsByClassName("shows")[0];
-    img.className = "";//清空img的class
+    var img           = slider.getElementsByClassName("shows")[0];
+        img.className = "";                                         //清空img的class
     //如果img有下一个兄弟
     if(img.nextElementSibling){
       //设置img的下一个兄弟的class为show
@@ -493,79 +493,81 @@ function $slider(time) {
 var config = [
   // 第一张图
   {
-    width: 400,
-    top: 50,
-    left: 350,
+    width  : 400,
+    top    : 50,
+    left   : 350,
     opacity: 0.2,
-    zIndex: 2
+    zIndex : 2
   },
   // 第二张图
   {
-    width: 600,
-    top: 120,
-    left: -100,
+    width  : 600,
+    top    : 120,
+    left   : -100,
     opacity: 0.8,
-    zIndex: 3
+    zIndex : 3
   },
   // 第三张图
   {
-    width: 800,
-    top: 100,
-    left: 200,
+    width  : 800,
+    top    : 100,
+    left   : 200,
     opacity: 1,
-    zIndex: 4
+    zIndex : 4
   },
   // 第四张图
   {
-    width: 600,
-    top: 120,
-    left: 700,
+    width  : 600,
+    top    : 120,
+    left   : 700,
     opacity: 0.8,
-    zIndex: 3
+    zIndex : 3
   }
 ];
 //页面加载的事件
-window.onload = function () {
-  var flag = true;//假设所有的动画执行完毕了——锁
-  //1.图片散开
-  var list = $Cls("slide")[0].getElementsByTagName("li");
-  function assign () {
-    for(var i=0;i<list.length;i++){
-    //设置每个li，都要把宽，层级，透明度，left，top到达指定的目标位置
-      animate(list[i],config[i],function(){
-        flag = true;
-      })        
+function $slide() {
+  window.onload = function () {
+    var flag = true;  //假设所有的动画执行完毕了——锁
+    //1.图片散开
+    var list = $Cls("slide")[0].getElementsByTagName("li");
+    function assign () {
+      for(var i=0;i<list.length;i++){
+      //设置每个li，都要把宽，层级，透明度，left，top到达指定的目标位置
+        animate(list[i],config[i],function(){
+          flag = true;
+        })        
+      }
     }
-  }
-  assign();
-  //右边按钮
-  $Cls("next")[0].onclick = function () {
-    if(flag){
-      flag = false;
-    //添加进数组的尾巴  把数组中第一个删除
-    config.push(config.shift());
-    assign();//重新分配
-    }
-  }
-  //左边按钮
-  $Cls("prev")[0].onclick = function () {
-    //把最后一个删除，返回成新值加入开头
-    if(flag){
-      flag=false;
-      config.unshift(config.pop());
     assign();
-    }       
-  }
+    //右边按钮
+    $Cls("next")[0].onclick = function () {
+      if(flag){
+        flag = false;
+      //添加进数组的尾巴  把数组中第一个删除
+      config.push(config.shift());
+      assign();//重新分配
+      }
+    }
+    //左边按钮
+    $Cls("prev")[0].onclick = function () {
+      //把最后一个删除，返回成新值加入开头
+      if(flag){
+        flag = false;
+        config.unshift(config.pop());
+      assign();
+      }       
+    }
 
-  //鼠标进入，左右焦点的div显示
-  $Cls("slide")[0].onmouseover = function () {
-    animate($Cls("arrow")[0],{"opacity":1});
-  };
-  //鼠标离开，左右焦点的div隐藏
-  $Cls("slide")[0].onmouseout = function () {
-    animate($Cls("arrow")[0],{"opacity":0});
-  };
-} 
+    //鼠标进入，左右焦点的div显示
+    $Cls("slide")[0].onmouseover = function () {
+      animate($Cls("arrow")[0],{"opacity":1});
+    };
+    //鼠标离开，左右焦点的div隐藏
+    $Cls("slide")[0].onmouseout = function () {
+      animate($Cls("arrow")[0],{"opacity":0});
+    };
+  } 
+}
 
 // 广告 重复弹出
 //依赖于lin.css
@@ -585,28 +587,27 @@ function $Ad(time){
 // time格式 'YYYY/MM/DD H:M:S' ends结束语
 function $calc(id,time,ends) {
   function calc(){
-    var end=new Date(time);
-    var now=new Date();
-    var s=parseInt((end-now)/1000);
+    var end = new Date(time);
+    var now = new Date();
+    var s   = parseInt((end-now)/1000);
     if(s>0){
-    var d=parseInt(s/3600/24);
-    if(d<10) d="0"+d;
+    var d       = parseInt(s/3600/24);
+    if (d<10) d = "0"+d;
     //s/3600/24,再下取整
-    var h=parseInt(s%(3600*24)/3600);
-    if(h<10) h="0"+h;
+    var h       = parseInt(s%(3600*24)/3600);
+    if (h<10) h = "0"+h;
     //s/(3600*24)的余数,再/3600,再下去整
-    var m=parseInt(s%3600/60);
-    if(m<10) m="0"+m;
+    var m       = parseInt(s%3600/60);
+    if (m<10) m = "0"+m;
     //s/3600的余数,再/60，再下取整
-    s%=60;//s/60的余数
-    if(s<10) s="0"+s;
+       s%      = 60;     //s/60的余数
+    if(s<10) s = "0"+s;
     //距离下一个假期还有: ?天?小时?分?秒
-    var span=my$(id);
-    span.innerHTML=d+"天"+h+"小时"+m+"分"+s+"秒";
+    var span           = my$(id);
+        span.innerHTML = d+"天"+h+"小时"+m+"分"+s+"秒";
     }else{
-    var span = my$(id);
-    span.innerHTML = ends;
-      clearInterval(timer);
+    var span           = my$(id);
+        span.innerHTML = ends;
     }
   }
   calc();
@@ -617,19 +618,19 @@ function $calc(id,time,ends) {
 // hide 和show 可以写HTML
 // 依赖于lin.css
 function $tree(hide,show) {
-  var d2 = $Cls("sign")[0];
-  d2.onclick = function () {
-    var  d2 = this;
+  var d2         = $Cls("sign")[0];
+      d2.onclick = function () {
+    var d2 = this;
     var d1 = $Cls("treeList")[0]
     var d3 = $Cls("treeContent")[0]
     if(d2.innerHTML == "&lt;&lt;"){
       d1.style.width = "0"
-      d2.innerHTML = "&gt;&gt";
-      d3.innerHTML = hide;  
+      d2.innerHTML   = "&gt;&gt";
+      d3.innerHTML   = hide;
     }else{
       d1.style.width = "64px";
-      d2.innerHTML = "&lt;&lt";
-      d3.innerHTML = show;
+      d2.innerHTML   = "&lt;&lt";
+      d3.innerHTML   = show;
     }
   }
 }
@@ -653,22 +654,79 @@ function $toTop(id,scrol){
 // 鼠标拖动元素
 // 要拖动的元素需要设置成固定定位来脱离文档流
 function $pop(cls) {
-  var pop = $Cls(cls)[0];
-  var canMove = false.offsetX,offsetY;
-  pop.onmousedown = function (e) {
+  var pop             = $Cls(cls)[0];
+  var canMove         = false.offsetX, offsetY;
+      pop.onmousedown = function (e) {
     canMove = true;
     offsetX = e.offsetX;
     offsetY = e.offsetY;
   }
   window.onmousemove = function (e) {
     if(canMove) {
-      var left = e.clientX-offsetX;
-      var top = e.clientY-offsetY;
-      pop.style.left = left+"px";
-      pop.style.top = top+"px";
+      var left           = e.clientX-offsetX;
+      var top            = e.clientY-offsetY;
+          pop.style.left = left+"px";
+          pop.style.top  = top+"px";
     }
   }
   pop.onmouseup = function () {
     canMove = false;
+  }
+}
+
+// 放大镜效果
+// 依赖于lin.css
+// 最外层div的class为loupe,小图small-box(包含两个div mark,float-box)，大图div big-box包含一张img
+// 由于图片大小不同，所以css样式肯定要调整
+function $loupe() {
+  window.onload = function () {
+    var loupe       = $Cls("loupe")[0];
+    var SmallBox    = $Cls("small-box")[0];
+    var Mark        = $Cls("mark")[0];
+    var FloatBox    = $Cls("float-box")[0];
+    var BigBox      = $Cls("big-box")[0];
+    var BigBoxImage = BigBox.getElementsByTagName("img")[0];
+
+    Mark.onmouseover = function () {
+        FloatBox.style.display = "block"
+        BigBox.style.display   = "block"
+    }
+
+    Mark.onmouseout = function () {
+        FloatBox.style.display = "none"
+        BigBox.style.display   = "none"
+    }
+
+    Mark.onmousemove = function (ev) {
+      var _event = ev || window.event;  //兼容多个浏览器的event参数模式
+
+      var left = _event.clientX - loupe.offsetLeft - SmallBox.offsetLeft - FloatBox.offsetWidth / 2;
+      var top  = _event.clientY - loupe.offsetTop - SmallBox.offsetTop - FloatBox.offsetHeight / 2;
+
+      //设置边界处理，防止移出小图片
+      if (left < 0) {
+          left = 0;
+      } else if (left > (Mark.offsetWidth - FloatBox.offsetWidth)) {
+          left = Mark.offsetWidth - FloatBox.offsetWidth;
+      }
+
+      if (top < 0) {
+          top = 0;
+      } else if (top > (Mark.offsetHeight - FloatBox.offsetHeight)) {
+          top = Mark.offsetHeight - FloatBox.offsetHeight;
+
+      }
+
+      FloatBox.style.left = left + "px";  //oSmall.offsetLeft的值是相对什么而言
+      FloatBox.style.top  = top + "px";
+      
+      //求其比值
+      var percentX = left / (Mark.offsetWidth - FloatBox.offsetWidth);
+      var percentY = top / (Mark.offsetHeight - FloatBox.offsetHeight);
+      
+      //方向相反，小图片鼠标移动方向与大图片相反，故而是负值
+      BigBoxImage.style.left = -percentX * (BigBoxImage.offsetWidth - BigBox.offsetWidth) + "px";
+      BigBoxImage.style.top  = -percentY * (BigBoxImage.offsetHeight - BigBox.offsetHeight) + "px";
+    }
   }
 }

@@ -12,11 +12,6 @@
 #slider>img.shows{  opacity:1; z-index: 2; }
 
 /* 3D轮播图 */
-/* 最外层div */
-.wrap{
-  width:1200px;
-  margin:100px auto;
-}
 /* 图片div */
 .slide {
   height:500px;
@@ -31,6 +26,7 @@
 .slide li img{
   width:100%;
 }
+
 /* 左右箭头的div */
 .arrow{
   opacity: 0;
@@ -51,6 +47,13 @@
 }
 .slide>ul{
 list-style: none;
+}
+
+/* 鼠标拖拽图片移动 */
+.toTop{
+  position:fixed;width:100px;height:100px;
+  background: #000;
+  background-size:100%;
 }
 
 /* 树状图：隐藏与显示 */
@@ -145,6 +148,106 @@ div{float:left; height: 100px; line-height: 100px; }
   animation-fill-mode:backwords;
   animation-direction:; */
   animation-play-state:paused;
+}
+
+ /* 放大镜效果
+ 依赖于lin.js
+ 最外层div的class为loupe,小图small-box(包含两个div mark,float-box)，大图div big-box包含一张img */
+ /* 由于图片大小不同，所以css样式肯定要调整 */
+ /*最外层div  */
+ .loupe {
+  display: block;
+  width: 200px;
+  height: 255px;
+  margin: 50px;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+.small-box {
+  position: relative;
+  z-index: 1;
+}
+/* 遮挡层 */
+.float-box {
+  display: none;
+  width: 160px;
+  height: 120px;
+  position: absolute;
+  background: #ffffcc;
+  border: 1px solid #ccc;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+/* 框架大小 */
+.mark {
+  position: absolute;
+  display: block;
+  width: 200px;
+  height: 255px;
+  background-color: #fff;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  z-index: 10;
+}
+/* 大图层 */
+.big-box {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 200px;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  z-index: 1;;
+}
+/* 大图片 */
+.big-box img {
+  position: absolute;
+  z-index: 5
+}
+
+/* 手风琴照片墙 */
+/* 外层div */
+.lin-acc {
+  width: 1050px;
+  margin: 100px auto;
+} 
+/* 内层ul>li>a>img  li>div.lin-title>a 写标题*/
+.lin-acc ul:hover li {
+  width: 80px;
+} 
+.lin-acc ul li:hover {
+  width: 500px;
+} 
+.lin-acc li .lin-title {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(0, 0, 0, .5);
+  text-indent: 2em;
+  line-height: 50px;
+  bottom: 0px;
+  left: 0
+} 
+.lin-acc a {
+  color: #fff;
+  text-decoration: none;
+}
+.lin-acc li {
+  float: left;
+  list-style: none;
+  width: 200px;
+  transition: all 1s linear;
+  position: relative;
+  overflow: hidden;
+  border-left: 2px solid rgba(255, 255, 255, .8);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+  height: 284px;
+}
+.lin-acc li img{
+  width: 100%;
 }
 
 /* 弹性布局左中右 */
