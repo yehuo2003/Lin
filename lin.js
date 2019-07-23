@@ -149,6 +149,34 @@ window.onscroll = function () {
    }
  }
 
+// 获取屏幕旋转方向
+window.addEventListener('resize', () => {
+  if (window.orientation === 180 || window.orientation === 0) {
+    // 正常方向或屏幕旋转180度
+    console.log("竖屏");
+  }
+  if (window.orientation === 90 || window.orientation === -90) {
+    // 屏幕顺时针旋转90度或逆时针旋转90度
+    console.log("横屏");
+  }
+})
+
+// 数组去重
+// [...new Set(arr)];
+// 生成长度为11的随机字母数字字符串
+Math.random().toString(36).substring(2);
+// 创建过去7天的数组,如果将代码中的减号换成加号,可以获得未来7天的数组集合
+[...Array(7).keys()].map(days => {
+  new Date(Date.now() - 86400000 * days);
+})
+
+// 为数组添加remove方法
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+}
+
 //判断浏览器是否支持这个方法
 function getStyle(elemnt,attr){
   return window.getComputedStyle?window.getComputedStyle(elemnt,null)[attr]: elemnt.getComputedStyle[attr];
